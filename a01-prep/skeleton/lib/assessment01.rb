@@ -5,35 +5,39 @@ class Array
   # no argument, then use the first element of the array as the default accumulator.
 
   def my_inject(accumulator = nil, &prc)
-    accum = accumulator ||= self.dup.shift
+    self_dup = self.dup
 
-    self.each do |el|
+    accum = accumulator ||= self_dup.shift
+
+    self_dup.each do |el|
       accum = prc.call(accum, el)
     end
     accum
   end
+
 end
 
 # primes(num) returns an array of the first "num" primes.
 # You may wish to use an is_prime? helper method.
 
 def is_prime?(num)
-  (2...num).none? do |el|
-    num % el == 0
+  (2...num).none? do |number|
+    num % number == 0
   end
 end
 
 def primes(num)
+  return [] if num == 0
 
   found_primes = []
-  val = 2
+  index = 2
+
   until found_primes.length == num
-    found_primes << val if is_prime?(val)
-    val += 1
+    found_primes << index if is_prime?(index)
+    index += 1
   end
 
   found_primes
-
 end
 
 # Write a recursive method that returns the first "num" factorial numbers.
@@ -44,16 +48,16 @@ end
 #### think about num - 1 when at home
 
 def factorials_rec(num)
-  # return [1] if num == 0
+
   return [1] if num == 1
 
   prev_factorial = factorials_rec(num - 1)
-  current_factorial = (num-1) * prev_factorial.last
+  current_factorial = (num - 1) * prev_factorial[-1]
 
   prev_factorial + [current_factorial]
 
-
 end
+
 
 class Array
 
@@ -63,18 +67,20 @@ class Array
   # [1, 3, 4, 3, 0, 3, 0].dups => { 3 => [1, 3, 5], 0 => [4, 6] }
 
   def dups
+    duplicates = self.select { |el| self.count(el) > 1 }.uniq
 
-    duplicates = self.select { |el| count(el) > 1 }.uniq
-    dup_hash = Hash.new { |h, k| h[k] = [] }
+    dup_hash = Hash.new { |h,k| h[k] = [] }
 
     duplicates.each do |duplicate|
       self.each_with_index do |el, idx|
-        dup_hash[el] << idx if el == duplicate
+        dup_hash[duplicate] << idx if el == duplicate
       end
     end
 
     dup_hash
   end
+
+
 end
 
 class String
@@ -84,19 +90,19 @@ class String
   # Only include substrings of length > 1.
 
   def symmetric_substrings
-    symm_subs = []
+    sym_subs = []
 
-    (length-1).times do |start|
-      (1...length).each do |end_frag|
-        substring = self[start..end_frag]
-        add_sub = substring == substring.reverse && substring.length > 1
-        symm_subs << substring if add_sub
+    (length - 1).times do |start|
+      (start..length).each do |end_pos|
+        substring = self[start...end_pos]
+        if substring.length > 1 && substring.reverse == substring
+          sym_subs << substring
+        end
       end
     end
-
-    symm_subs
-
+    sym_subs
   end
+
 end
 
 class Array
@@ -105,16 +111,13 @@ class Array
 
   def merge_sort(&prc)
 
-    prc ||= Proc.new { |x, y| x <=> y }
+    prc = prc ||= Proc.new { |x, y| x <=> y }
 
-    return self if length <= 1
+    return self if self.length <= 1
 
-    middle_idx = length / 2
-    left_array = self.take(middle_idx)
-    right_array = self.drop(middle_idx)
-
-    sorted_left = left_array.merge_sort(&prc)
-    sorted_right = right_array.merge_sort(&prc)
+    midpoint = length / 2
+    sorted_left = self.take(midpoint).merge_sort(&prc)
+    sorted_right = self.drop(midpoint).merge_sort(&prc)
 
     Array.merge(sorted_left, sorted_right, &prc)
 
@@ -122,10 +125,11 @@ class Array
   end
 
   private
+
   def self.merge(left, right, &prc)
     merged = []
-    until left.empty? || right.empty?
 
+    until left.empty? || right.empty?
       case prc.call(left.first, right.first)
       when -1
         merged << left.shift
@@ -135,11 +139,10 @@ class Array
         merged << right.shift
       end
     end
-
     merged.concat(left)
     merged.concat(right)
-
     merged
 
   end
+
 end
