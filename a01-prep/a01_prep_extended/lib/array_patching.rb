@@ -149,28 +149,76 @@ class Array
   end
 
   #Write a monkey patch of quick sort that accepts a block
+  # use a pivot
   def my_quick_sort(&prc)
-    prc = prc ||= Proc.new { |x, y| x <=> y }
 
     return self if self.length <= 1
 
+    prc = prc ||= Proc.new { |x, y| x <=> y }
 
     pivot = self.first
+    left = self[1..-1].select { |el| prc.call(el, pivot) <= 0 }
+    right = self[1..-1].select { |el| prc.call(el, pivot) == 1 }
 
+    left.my_quick_sort(&prc) + [pivot] + right.my_quick_sort(&prc)
 
-    left = self.select { |el| prc.call(el, pivot) == -1 }
-    middle = self.select { |el| prc.call(el, pivot) == 0 }
-    right = self.select { |el| prc.call(el, pivot) == 1 }
-
-
-    left.my_quick_sort(&prc) + [pivot].concat(middle.drop(1)) +
-     right.my_quick_sort(&prc)
 
   end
 
   # Write a monkey patch of binary search that accepts a comparison block:
   # E.g. [1, 2, 3, 4, 5, 7].my_bsearch(6) {|el, targ| el+1 <=> targ} => 4
+  # sort in the middle and move to left or right
   def my_bsearch(target, &prc)
+    return nil if self.empty?
+
+    middle_idx = length / 2
+
+    case prc.call(self[middle_idx], target)
+    when -1
+      self.dup.take(middle_idx).my_bsearch(target, &prc)
+    when 0
+      return middle_idx
+    when 1
+      search_res = self.dup.drop(middle_idx + 1).my_bsearch(target, &prc)
+      search_res.nil? ? nil : search_res + middle_idx + 1
+    end
+
+
+  end
+
+  def merge_sort(&prc)
+    return self if self.length <= 1
+
+    prc = prc ||= Proc.new { |x, y| x <=> y }
+
+    middle = lenth / 2
+    sorted_left = self.take(middle).merge_sort(&prc)
+    sorted_right = self.drop(middle).merge_sort(&prc)
+
+    Array.merge(left, right, &prc)
+
+
+  end
+
+  def self.merge
+
+    merged = []
+
+    until left.empty? || right.empty?
+      case prc.call(left.first, right.first)
+      when -1
+        merged << left.shift
+      when 0
+        merged << left.shift
+      when 1
+        merged << right.shift
+      end
+    end
+
+    merged.concat(left)
+    merged.concat(right)
+
+    merged
 
   end
 

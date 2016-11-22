@@ -4,18 +4,45 @@ class RecursionMachine
 
   # Implement a method that finds the sum of the first n
   # fibonacci numbers recursively. Assume n > 0
-  def fibs_sum(n)
+  def fibs_rec(n)
+    return [] if n == 0
+    return [0] if n == 1
+    return [0, 1] if n == 2
 
+    fibs = fibs_rec(n - 1)
+    p fibs
+    fibs << fibs[-2] + fibs[-1]
+
+
+  end
+
+  def fibs_rec(n)
+  if n <= 2
+    [0, 1].take(n)
+  else
+    fibs = fibs_rec(n - 1)
+    p fibs
+    fibs << fibs[-2] + fibs[-1]
+  end
   end
 
   #returns all subsets of an array
   def subsets(array)
+    return [[]] if arr.empty?
+
+    sub_array = subsets(array[0..-2])
+
+    sub_array.concat(sub_array.map { |el| el + [array.last] })
 
   end
 
 
   # return the sum of the first n even numbers recursively. Assume n > 0
   def first_even_numbers_sum(n)
+    return 2 if n == 1
+
+    (2 * n) + first_even_numbers_sum(n -1)
+  
 
   end
 
@@ -54,7 +81,7 @@ class RecursionMachine
   end
 
   def is_prime?(num)
-  
+
   end
 
   # Write a method, `digital_root(num)`. It should Sum the digits of a positive

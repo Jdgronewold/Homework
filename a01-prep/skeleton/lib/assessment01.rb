@@ -12,7 +12,9 @@ class Array
     self_dup.each do |el|
       accum = prc.call(accum, el)
     end
+
     accum
+
   end
 
 end
@@ -24,17 +26,16 @@ def is_prime?(num)
   (2...num).none? do |number|
     num % number == 0
   end
+
 end
 
 def primes(num)
-  return [] if num == 0
-
   found_primes = []
-  index = 2
 
+  number = 2
   until found_primes.length == num
-    found_primes << index if is_prime?(index)
-    index += 1
+    found_primes << number if is_prime?(number)
+    number += 1
   end
 
   found_primes
@@ -48,7 +49,7 @@ end
 #### think about num - 1 when at home
 
 def factorials_rec(num)
-
+  return [] if num == 0
   return [1] if num == 1
 
   prev_factorial = factorials_rec(num - 1)
@@ -67,9 +68,9 @@ class Array
   # [1, 3, 4, 3, 0, 3, 0].dups => { 3 => [1, 3, 5], 0 => [4, 6] }
 
   def dups
-    duplicates = self.select { |el| self.count(el) > 1 }.uniq
 
-    dup_hash = Hash.new { |h,k| h[k] = [] }
+    duplicates = self.select { |el| self.count(el) > 1 }.uniq
+    dup_hash = Hash.new { |h, k| h[k] = [] }
 
     duplicates.each do |duplicate|
       self.each_with_index do |el, idx|
@@ -78,6 +79,7 @@ class Array
     end
 
     dup_hash
+
   end
 
 
@@ -92,7 +94,7 @@ class String
   def symmetric_substrings
     sym_subs = []
 
-    (length - 1).times do |start|
+    length.times do |start|
       (start..length).each do |end_pos|
         substring = self[start...end_pos]
         if substring.length > 1 && substring.reverse == substring
@@ -101,6 +103,7 @@ class String
       end
     end
     sym_subs
+
   end
 
 end
@@ -117,7 +120,7 @@ class Array
 
     midpoint = length / 2
     sorted_left = self.take(midpoint).merge_sort(&prc)
-    sorted_right = self.drop(midpoint).merge_sort(&prc)
+    sorted_right = self.drop(midpoint). merge_sort(&prc)
 
     Array.merge(sorted_left, sorted_right, &prc)
 
@@ -139,9 +142,27 @@ class Array
         merged << right.shift
       end
     end
+
     merged.concat(left)
     merged.concat(right)
+
     merged
+
+  end
+
+  def quick_sort(&prc)
+
+    prc = prc ||= Proc.new { |x, y| x <=> y }
+
+    return self if self.length == 1
+
+    pivot = self.first
+
+    left = select { |el| prc.call(el, pivot) == -1 }
+    middle = select { |el| prc.call(el, pivot) == 0}.drop(1)
+    right = select { |el| prc.call(el, pivot) == 1 }
+
+    left.quick_sort(&prc) + [pivot].concat(middle) + right.quick_sort(&prc)
 
   end
 

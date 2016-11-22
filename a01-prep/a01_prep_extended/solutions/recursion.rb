@@ -11,7 +11,8 @@ class RecursionMachine
     return [[]] if arr.empty?
 
     subs = subsets(arr[0..-2])
-    subs.concat(subs.map{|el| el += [arr.last]})
+
+    subs.concat(subs.map { |el| el + [arr.last]})
   end
 
   def first_even_numbers_sum(n)
