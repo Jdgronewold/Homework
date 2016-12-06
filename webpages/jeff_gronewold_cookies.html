@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Jeff Gronewold Cookies!</title>
+</head>
+<body>
+  <header>
+    <img src="https://d3c5s1hmka2e2b.cloudfront.net/uploads/topic/image/4/appacademy.png" alt="App Academy Logo">
+    <nav>
+      <ul>
+        <li><a href="#description">Description</a></li>
+        <li><a href="#ingredients">Ingredients</a></li>
+        <li><a href="#directions">Directions</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <aside>
+    <h2 id="ingredients">Ingredients</h2>
+
+    <ul>
+      <li>15 tb unsalted butter</li>
+      <li>2 eggs</li>
+      <li>2 Tbs vanilla</li>
+      <li>1.5 cups white sugar</li>
+      <li>1 Tbs brown sugar</li>
+      <li>2 Tbs maple syrup</li>
+      <li>2.5 cups flower</li>
+      <li>1/2 tsp salt</li>
+      <li>1 tsp baking soda</li>
+      <li>1 cup chocolate chips</li>
+    </ul>
+  </aside>
+
+  <section>
+    <h1>Cookies</h1>
+
+    <figure>
+      <img src="http://cdn.pinchofyum.com/wp-content/uploads/2013/03/perfect-chocolate-chip-cookies-31.jpg"
+           alt="Cookie Recipe">
+    </figure>
+
+
+    <h2 id="description">Description</h2>
+    <p>
+       These cookies are pretty much the best ones in the world.
+    </p>
+
+    <h2 id="directions">Directions</h2>
+    <ol>
+      <li>
+        Melt butter in either the microwave or in a steel bowl in the over
+      <li>
+        Preheat oven to 325
+      </li>
+      <li>
+        Allow butter to mostly cool to room temperature, add sugars, syrup, and vanilla
+      </li>
+      <li>
+        Crack the eggs, one at a time, into sugar/butter mixture. Beat on low until well mixed
+      </li>
+      <li>
+        In a separate bowl, combine all the dry ingredients
+      </li>
+      <li>
+        Slowly mix in the dry ingredients to the sugar/butter mixture, beating until well mixed
+      </li>
+      <li>
+        Add choclate chips to the dough!
+      </li>
+      <li>
+        Refridgerate or freeze dough for at least two hours to prepare the dough
+      </li>
+      <li>
+        Roll dough into Tbs size balls and bake for 8-10 minutes or until golden brown around the edges
+      </li>
+    </ol>
+  </section>
+
+  <<section id="reviews">
+    <h2>Reviews</h2>
+      <form action="/reviews" method="post">
+        <label for="name">Name</label>
+        <input id="name" type="text" name="name">
+
+        <label for="rating">Rating</label>
+        1<input type="radio" name="rating" value="1" checked>
+        2<input type="radio" name="rating" value="2">
+        3<input type="radio" name="rating" value="3">
+        4<input type="radio" name="rating" value="4">
+        5<input type="radio" name="rating" value="5">
+
+        <label for="expertise">Cooking Expertise</label>
+
+        <select id="expertise" name="expertise">
+          <option value="Select Cooking Expertise" disabled="true" selected="true">Select Cooking Experise</option>
+
+          <option value="Sometimes Cook">Sometimes Cook</option>
+
+          <option value="Cook Everyday">Cook Everyday</option>
+
+          <option value="Cooking is a Hobby">Cooking is a Hobby</option>
+
+          <option value="Professional Chef">Professional Chef</option>
+        </select>
+
+        <label>Review
+          <textarea name="review" cols="30" rows="10"></textarea>
+        </label>
+
+        <input type="submit" value="Submit Review">
+      </form>
+  </section>
+
+  </form>
+
+  <footer>
+    <p>Original Recipe by <a href="http://pinchofyum.com/perfect-chocolate-chip-cookies">Pinch of Yum</a></p>
+  </footer>
+</body>
+</html>
