@@ -1,0 +1,23 @@
+.main-content {
+  display: flex;
+  flex-direction: row;
+}
+
+.personal-routes {
+  background: red;
+  flex: 1;
+}
+
+.map-section {
+  background: blue;
+  flex: 1;
+}
+
+.friend-routes {
+  background: green;
+  flex: 1;
+}
+
+#map {
+  height: 100%;
+}
